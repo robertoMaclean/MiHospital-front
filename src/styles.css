@@ -1,1 +1,33 @@
 /* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+.snack-error {
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+    font-weight: bold;
+  }
+  
+  .snack-error .mat-simple-snackbar-action {
+    color: #a94442;
+  }
+  
+  .snack-info {
+    font-weight: bold;
+  }
+  
+  .snack-info .mat-simple-snackbar-action {
+    color: white;
+  }
+  
+  .snack-success {
+    color: #3c763d;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+    font-weight: bold;
+  }
+  
+  .snack-success .mat-simple-snackbar-action {
+    color: #3c763d;
+  }
+  
