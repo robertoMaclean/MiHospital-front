@@ -4,7 +4,7 @@ import { first, map } from 'rxjs/operators';
 import { MatTableDataSource } from '@angular/material';
 import { RetiroMedicamento, Institucion } from '../_models';
 import { SelectionModel } from '@angular/cdk/collections';
-import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { DialogConfirmComponent, DialogData } from '../dialog-confirm/dialog-confirm.component'
 import { MatDialog } from '@angular/material';
 import { RetiroMedicamentoFormComponent } from '../retiro-medicamento-form/retiro-medicamento-form.component';
@@ -22,14 +22,12 @@ export class RetiroMedicamentoComponent implements OnInit {
   selection = new SelectionModel<RetiroMedicamento>(true, []);
   deleteButton: boolean;
   retiroMedicamentos: RetiroMedicamento[];
-  registerForm: FormGroup;
   loading = false;
   submitted = false;
   instituciones: Institucion[];
 
   constructor(
     private retiroMedicamentoService: RetiroMedicamentoService,
-    private formBuilder: FormBuilder,
     private alertService: AlertService,
     public dialog: MatDialog,
     private institucionService: InstitucionService
@@ -39,14 +37,6 @@ export class RetiroMedicamentoComponent implements OnInit {
     this.loadRetiroMedicamentos();
     this.deleteButtonActive();  
     this.getInstituciones();
-    this.registerForm = this.formBuilder.group({
-      nombre: ['', Validators.required],
-      hora: ['', Validators.required],
-      fecha: ['', [Validators.required]],
-      lugar: ['', [Validators.required]],
-      paciente_rut: ['', [Validators.required], this.validateRut.bind(this)],
-      id_institucion: ['', [Validators.required]]
-    });
   }
 
   private loadRetiroMedicamentos() {
@@ -92,6 +82,7 @@ export class RetiroMedicamentoComponent implements OnInit {
       data: response
     });
     dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
       if(result){
         this.deleteRetiroMedicamento();
         this.selection.clear();
@@ -110,42 +101,11 @@ export class RetiroMedicamentoComponent implements OnInit {
           this.loading = false;
         },
         error => {
-          this.alertService.error(error);
+          this.alertService.error(error.message);
           this.loadRetiroMedicamentos();
           this.loading = false;
       }); 
     }   
-  }
-
-  onSubmit() {
-    this.submitted = true;
-
-    // stop here if form is invalid
-    if (this.registerForm.invalid) {
-      return;
-    }
-    
-    this.loading = true;
-    this.retiroMedicamentoService.insert(this.registerForm.value)
-      .pipe(first())
-      .subscribe(
-        () => {
-          this.alertService.success('Usuario ingresado satisfactoriamente', true);
-          this.loading = false;
-          this.loadRetiroMedicamentos();
-          this.registerForm.reset();
-        },
-        error => {
-          this.alertService.error(error);
-          this.loading = false;
-        }
-      );
-  }
-
-  validateRut(control: AbstractControl){
-    return this.retiroMedicamentoService.pacienteExist(control.value).pipe(map(res =>{
-      return res ? null : { validRUT: true }
-    }));
   }
 
   getInstituciones(){

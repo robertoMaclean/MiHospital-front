@@ -10,7 +10,7 @@ export class Validate {
 
   ValidateRUT(rut: string) {
     if(rut=='') rut='-1';
-    return true;
+    return this.http.get('/retiro_medicamento/' + 'paciente_exist/' + rut);
   }
 
 }

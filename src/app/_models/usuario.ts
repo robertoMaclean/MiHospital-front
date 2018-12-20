@@ -3,7 +3,7 @@ export class Usuario {
     nombres: string;
     apellido: string;
     correo: string;
-    contraseña: string;
+    contrasena: string;
     esPaciente: number;
     es_some: number;
     creado_por: string;

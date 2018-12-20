@@ -1,16 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { Institucion } from '../_models';
-import { InstitucionService, RetiroMedicamentoService, AlertService } from '../_services';
+import { InstitucionService, UsuarioService, AlertService } from '../_services';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { first, map } from 'rxjs/operators';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
-  selector: 'app-retiro-medicamento-form',
-  templateUrl: './retiro-medicamento-form.component.html',
-  styleUrls: ['./retiro-medicamento-form.component.css']
+  selector: 'app-usuario-form',
+  templateUrl: './usuario-form.component.html',
+  styleUrls: ['./usuario-form.component.css']
 })
-export class RetiroMedicamentoFormComponent implements OnInit {
+
+export class UsuarioFormComponent implements OnInit {
 
   instituciones: Institucion[];
   registerForm: FormGroup;
@@ -19,29 +20,23 @@ export class RetiroMedicamentoFormComponent implements OnInit {
 
   constructor(
     private institucionService: InstitucionService,
-    private retiroMedicamentoService: RetiroMedicamentoService,
+    private usuarioService: UsuarioService,
     private formBuilder: FormBuilder,
     private alertService: AlertService,
-    public dialogRef: MatDialogRef<RetiroMedicamentoFormComponent>
+    public dialogRef: MatDialogRef<UsuarioFormComponent>
     ) { }
 
   ngOnInit() {
     this.getInstituciones();
     this.registerForm = this.formBuilder.group({
-      nombre: ['', Validators.required],
-      hora: ['', Validators.required],
-      fecha: ['', [Validators.required]],
-      lugar: ['', [Validators.required]],
-      paciente_rut: ['', [Validators.required], this.validateRut.bind(this)],
-      id_institucion: ['', [Validators.required]],
-      dosis: ['']
+      nombres: ['', Validators.required],
+      apellido: ['', Validators.required],
+      contrasena: ['', [Validators.required, Validators.minLength(6)]],
+      correo: ['', [Validators.required]],
+      telefono: [''],
+      rut: ['', Validators.required],
+      id_institucion: ['', Validators.required]
     });
-  }
-
-  validateRut(control: AbstractControl){
-    return this.retiroMedicamentoService.pacienteExist(control.value).pipe(map(res =>{
-      return res ? null : { validRUT: true }
-    }));
   }
 
   getInstituciones(){
@@ -59,17 +54,18 @@ export class RetiroMedicamentoFormComponent implements OnInit {
     }
     
     this.loading = true;
-    this.retiroMedicamentoService.insert(this.registerForm.value)
+    this.usuarioService.insert(this.registerForm.value)
       .pipe(first())
       .subscribe(
         () => {
-          this.alertService.success('Retiro medicamento ingresado satisfactoriamente', true);
+          this.alertService.success('Usuario ingresado satisfactoriamente', true);
           this.loading = false;
           this.registerForm.reset();
           this.dialogRef.close();
         },
         error => {
-          this.alertService.error(error.message);
+          console.log(error);
+          this.alertService.error(error);
           this.loading = false;
         }
       );

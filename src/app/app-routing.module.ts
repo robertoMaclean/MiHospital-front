@@ -2,10 +2,14 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { RetiroMedicamentoComponent } from './retiro-medicamento/retiro-medicamento.component';
 import { UsuarioComponent } from './usuario/usuario.component';
+import { LoginComponent } from './login';
+import { AuthSomeGuard } from './_guards';
 
 const routes: Routes = [
-  { path: '', component: RetiroMedicamentoComponent },
-  { path: 'usuarios', component: UsuarioComponent }
+  { path: 'retiro_medicamento', component: RetiroMedicamentoComponent, canActivate: [AuthSomeGuard] },
+  { path: 'usuario', component: UsuarioComponent, canActivate: [AuthSomeGuard] },
+  { path: '', redirectTo: '/retiro_medicamento', pathMatch: 'full' },
+  { path: 'login', component: LoginComponent}
 ];
 
 @NgModule({

@@ -1,0 +1,8 @@
+/* AppComponent's private CSS styles */
+.icon {
+  padding: 0 14px;
+}
+
+.left-spacer {
+  flex: 1 1 auto;
+}

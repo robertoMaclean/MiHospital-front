@@ -1,2 +1,27 @@
-<alert></alert>
-<router-outlet></router-outlet>
+<div class="content">
+  <ng-container *ngIf="view!='/login'">
+    <mat-toolbar>
+      <mat-toolbar-row class="mat-elevation-z6 nav-bar">  
+        <span class="font-weight-500">ADMINISTRACIÓN RETIRO MEDICAMENTOS</span>
+        <span class="left-spacer"></span>
+        <div fxShow="true" fxHide.lt-md="true">
+          <a mat-button routerLink="/retiro_medicamento">Retiro Medicamentos</a>
+          <a mat-button routerLink="/usuario">Usuarios SOME</a>
+          <a mat-button routerLink="/login">Salir</a>  
+        </div>
+        <div fxShow="true" fxHide.gt-sm="true">
+          <button mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon>menu</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <a mat-menu-item routerLink="/retiro_medicamento">Retiro Medicamentos</a>
+            <a mat-menu-item routerLink="/usuario">Usuarios SOME</a>
+            <a mat-menu-item routerLink="/login">Salir</a>
+          </mat-menu>
+        </div>
+      </mat-toolbar-row>
+    </mat-toolbar>
+  </ng-container>
+  <alert></alert>
+  <router-outlet></router-outlet>
+</div>
