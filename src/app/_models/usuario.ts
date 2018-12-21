@@ -4,12 +4,9 @@ export class Usuario {
     apellido: string;
     correo: string;
     contrasena: string;
-    esPaciente: number;
-    es_some: number;
-    creado_por: string;
-    fecha_creacion: string;
-    id_institucion: number;
-    primer_ingreso: number;
-    acepta_condiciones: number;
+    institucion: {
+        id: number;
+        nombre_institucion: string;
+    }
     telefono: string;
 }

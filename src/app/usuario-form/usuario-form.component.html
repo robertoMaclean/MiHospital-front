@@ -10,6 +10,9 @@
             <div class="form-group">
               <mat-form-field class="full-width">
                 <input matInput placeholder="RUT" formControlName="rut">
+                <mat-error *ngFor="let validation of account_validation_messages.email">
+                  <mat-error class="error-message" *ngIf="registerForm.get('rut').hasError(validation.type) && (registerForm.get('rut').dirty || registerForm.get('rut').touched)">{{validation.message}}</mat-error>
+                </mat-error>
               </mat-form-field>
             </div>
             <div class="form-group ">
@@ -25,6 +28,11 @@
             <div class="form-group">
               <mat-form-field class="full-width">
                 <input matInput placeholder="Contraseña" type="password" formControlName="contrasena">
+              </mat-form-field>
+            </div>
+            <div class="form-group">
+              <mat-form-field class="full-width">
+                <input matInput placeholder="Repetir Contraseña" type="password" formControlName="repetir_contrasena">
               </mat-form-field>
             </div>
             <div class="form-group">

@@ -3,7 +3,7 @@ import { Institucion } from '../_models';
 import { InstitucionService, RetiroMedicamentoService, AlertService } from '../_services';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { first, map } from 'rxjs/operators';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef } from '@angular/material';
 
 @Component({
   selector: 'app-retiro-medicamento-form',

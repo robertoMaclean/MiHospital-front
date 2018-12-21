@@ -16,13 +16,14 @@ import { UsuarioFormComponent } from '../usuario-form/usuario-form.component';
 
 export class UsuarioComponent implements OnInit {
 
-  displayedColumns: string[] = ['select', 'nombres', 'apellido', 'rut', 'correo', 'telefono', 'institucion'];
+  displayedColumns: string[] = ['select', 'nombres', 'apellido', 'rut', 'correo', 'telefono', 'institucion', 'editar'];
   dataSource:  MatTableDataSource<Usuario>;
   selection = new SelectionModel<Usuario>(true, []);
   deleteButton: boolean;
   usuarios: Usuario[];
   loading = false;
   submitted = false;
+  edit = false;
   instituciones: Institucion[];
 
   constructor(
@@ -103,7 +104,7 @@ export class UsuarioComponent implements OnInit {
           this.alertService.error(error.message);
           this.loading = false;
       }); 
-    }   
+    }    
   }
 
   getInstituciones(){
@@ -114,10 +115,23 @@ export class UsuarioComponent implements OnInit {
 
   new(){
     const dialogRef = this.dialog.open(UsuarioFormComponent, {
-      width: '500px'
+      width: '500px',
+      data: null
     });
     dialogRef.afterClosed().subscribe(()=> {
       this.loadUsuarios();
+    });
+  }
+
+  update(usuario: Usuario){
+    this.edit = true;
+    const dialogRef = this.dialog.open(UsuarioFormComponent, {
+      width: '500px',
+      data: usuario
+    });
+    dialogRef.afterClosed().subscribe(()=> {
+      this.loadUsuarios();
+      this.edit = false;
     });
   }
 }

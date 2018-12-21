@@ -71,7 +71,7 @@ export class RetiroMedicamentoComponent implements OnInit {
   confirmDeleteUser() {
     let message: DialogData = {
       title: "Eliminar usuario",
-      message: "¿Está seguro que desea eliminar a los usuarios seleccionados?"
+      message: "¿Está seguro que desea eliminar a los retiro medicamentos seleccionados?"
     }
     this.openDeleteDialog(message);
   }
