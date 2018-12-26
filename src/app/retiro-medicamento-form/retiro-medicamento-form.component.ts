@@ -4,6 +4,7 @@ import { InstitucionService, RetiroMedicamentoService, AlertService } from '../_
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { first, map } from 'rxjs/operators';
 import { MatDialogRef } from '@angular/material';
+import { account_validation_messages } from '../_validator';
 
 @Component({
   selector: 'app-retiro-medicamento-form',
@@ -16,6 +17,7 @@ export class RetiroMedicamentoFormComponent implements OnInit {
   registerForm: FormGroup;
   loading = false;
   submitted = false;
+  account_validation_messages = account_validation_messages;
 
   constructor(
     private institucionService: InstitucionService,

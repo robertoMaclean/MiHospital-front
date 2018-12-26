@@ -25,6 +25,7 @@ export class UsuarioComponent implements OnInit {
   submitted = false;
   edit = false;
   instituciones: Institucion[];
+  header = 'Administración Usuarios';
 
   constructor(
     private usuarioService: UsuarioService,
@@ -43,6 +44,7 @@ export class UsuarioComponent implements OnInit {
     this.usuarioService.getAll().pipe(first()).subscribe(usuarios => { 
       this.usuarios = usuarios; 
       this.dataSource = new MatTableDataSource<Usuario>(this.usuarios);
+      console.log(this.usuarios);
     });
   }
 
@@ -92,6 +94,7 @@ export class UsuarioComponent implements OnInit {
   deleteUsuario() {
     for(let i=0;i<this.selection.selected.length;i++){
       let rut = this.selection.selected[i].rut;
+      console.log(rut);
       this.loading = true;
       this.usuarioService.delete(rut).pipe(first()).subscribe(
         () => { 

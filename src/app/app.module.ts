@@ -21,6 +21,7 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { JwtInterceptor, ErrorInterceptor } from './_helpers';
 import { LoginComponent } from './login';
 import { AuthSomeGuard } from './_guards';
+import { HeaderComponent } from './header/header.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { AuthSomeGuard } from './_guards';
     AlertComponent,
     UsuarioComponent,
     UsuarioFormComponent,
-    LoginComponent
+    LoginComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,

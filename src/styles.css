@@ -37,19 +37,23 @@ html, body {
 }
 
 .mat-toolbar {
-  background-color: #1565c0;
+  background-color: #3D348B;
   color: white; 
   font-size: 24px;
   font-weight: 500; 
 }
 
 .nav-bar {
-  background-color: #1565c0;
+  background-color: #3D348B;
   position: fixed; 
   z-index: 2;
 }
 
 .margin-20{
   margin: 20px;
+}
+
+.margin-bottom-10 {
+  margin-bottom: 10px;
 }
   

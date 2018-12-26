@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
             password: ['', Validators.required]
         });
 
-        this.header = 'Acceso al sistema RNC';
+        this.header = 'Acceso Administración Retiro Medicamentos';
         this.title = '';
         this.authenticationService.logout();
     }

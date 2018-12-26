@@ -32,23 +32,37 @@ export class UsuarioService {
     }
 
     update(usuario: Usuario, rut: string) {
-        let body = this.fillBody(usuario)
+        console.log(usuario);
+        let body = this.fillEditBody(usuario)
+        console.log(body.toString());
         let options = {
             headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
         };
-        return this.http.put(this.URL + rut, body.toString(), options);
+        return this.http.put(this.URL, body.toString(), options);
     }
 
     private fillBody(usuario: any): URLSearchParams {
         console.log(usuario);
         let user = JSON.parse(localStorage.getItem("currentUser"));
         let body = new URLSearchParams();
-        body.set('rut', usuario.rut);
         body.set('nombres', usuario.nombres);
         body.set('apellido', usuario.apellido);
         body.set('correo', usuario.correo);
         body.set('contrasena', usuario.contrasena);
         body.set('creado_por', user['rut']);
+        body.set('id_institucion', usuario.id_institucion.toString());
+        body.set('telefono', usuario.telefono);
+        body.set('rut', usuario.rut);
+        return body;
+    }
+
+    private fillEditBody(usuario: any): URLSearchParams {
+
+        let body = new URLSearchParams();
+        body.set('rut', usuario.rut);
+        body.set('nombres', usuario.nombres);
+        body.set('apellido', usuario.apellido);
+        body.set('correo', usuario.correo);
         body.set('id_institucion', usuario.id_institucion.toString());
         body.set('telefono', usuario.telefono);
         body.set('rut', usuario.rut);

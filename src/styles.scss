@@ -1,0 +1,18 @@
+.component-page-header {
+    display: flex;
+    color: white;
+    align-items: center;
+    background: #1D2072; 
+    @media (max-width: 720px) {
+      padding-left: 0;
+    }
+  }
+
+.docs-primary-header h1 {
+    font-weight: 300;
+    margin: 0;
+    padding: 10px 8px;
+    font-size: 20px;
+    color: #fff;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}

@@ -4,6 +4,7 @@ export class RutValidador {
   static rutFormat(control: AbstractControl){	
     let texto = control.value;
     var tmpstr = "";	
+    if(texto=='') return null;
     for (let i=0; i < texto.length ; i++ )		
       if ( texto.charAt(i) != ' ' && texto.charAt(i) != '.' && texto.charAt(i) != '-' )
         tmpstr = tmpstr + texto.charAt(i);	

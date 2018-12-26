@@ -25,6 +25,7 @@ export class RetiroMedicamentoComponent implements OnInit {
   loading = false;
   submitted = false;
   instituciones: Institucion[];
+  header: string;
 
   constructor(
     private retiroMedicamentoService: RetiroMedicamentoService,
@@ -37,6 +38,7 @@ export class RetiroMedicamentoComponent implements OnInit {
     this.loadRetiroMedicamentos();
     this.deleteButtonActive();  
     this.getInstituciones();
+    this.header = 'Administración Retiro Medicamentos';
   }
 
   private loadRetiroMedicamentos() {
