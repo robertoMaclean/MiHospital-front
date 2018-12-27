@@ -21,9 +21,9 @@ export class UsuarioFormComponent implements OnInit {
   loading = false;
   submitted = false;
   matcher = new MyErrorStateMatcher();
-  edit: boolean;
   form_title: string;
   rut: string;
+  edit: boolean;
   
   constructor(
     private institucionService: InstitucionService,
@@ -36,7 +36,7 @@ export class UsuarioFormComponent implements OnInit {
 
   ngOnInit() {
     this.getInstituciones();
-    if(this.usuario == null){
+    if(this.usuario==null){
       this.form_title = 'Registrar Usuario';
       this.edit = false;
       this.registerForm = this.formBuilder.group({
@@ -83,11 +83,12 @@ export class UsuarioFormComponent implements OnInit {
     }
     this.loading = true;
     if(this.edit){
-      this.usuarioService.update(this.registerForm.value, this.rut)
+      let usuario = new Usuario(this.registerForm.value);
+      this.usuarioService.update(usuario, this.rut)
       .pipe(first())
       .subscribe(
         () => {
-          this.alertService.success('Usuario ingresado satisfactoriamente', true);
+          this.alertService.success('Usuario Registrado satisfactoriamente', true);
           this.loading = false;
           this.dialogRef.close();
         },

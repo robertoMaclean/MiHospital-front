@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { Institucion } from '../_models';
+import { Component, OnInit, Inject } from '@angular/core';
+import { Institucion, RetiroMedicamento } from '../_models';
 import { InstitucionService, RetiroMedicamentoService, AlertService } from '../_services';
-import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, AbstractControl, FormControl } from '@angular/forms';
 import { first, map } from 'rxjs/operators';
-import { MatDialogRef } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { account_validation_messages } from '../_validator';
 
 @Component({
@@ -18,26 +18,50 @@ export class RetiroMedicamentoFormComponent implements OnInit {
   loading = false;
   submitted = false;
   account_validation_messages = account_validation_messages;
+  selected: number;
+  edit: boolean;
+  retiroID: number;
+  institucionSelected: Institucion;
 
   constructor(
     private institucionService: InstitucionService,
     private retiroMedicamentoService: RetiroMedicamentoService,
     private formBuilder: FormBuilder,
     private alertService: AlertService,
-    public dialogRef: MatDialogRef<RetiroMedicamentoFormComponent>
+    public dialogRef: MatDialogRef<RetiroMedicamentoFormComponent>,
+    @Inject(MAT_DIALOG_DATA) public retiroMedicamento: RetiroMedicamento
     ) { }
 
   ngOnInit() {
     this.getInstituciones();
-    this.registerForm = this.formBuilder.group({
-      nombre: ['', Validators.required],
-      hora: ['', Validators.required],
-      fecha: ['', [Validators.required]],
-      lugar: ['', [Validators.required]],
-      paciente_rut: ['', [Validators.required], this.validateRut.bind(this)],
-      id_institucion: ['', [Validators.required]],
-      dosis: ['']
-    });
+    if(this.retiroMedicamento==null){
+      this.edit = false;
+      this.registerForm = this.formBuilder.group({
+        nombre: ['', Validators.required],
+        hora: ['', Validators.required],
+        fecha: ['', [Validators.required]],
+        lugar: ['', [Validators.required]],
+        paciente_rut: ['', [Validators.required], this.validateRut.bind(this)],
+        id_institucion: ['', [Validators.required]],
+        dosis: ['']
+      });
+    }else {
+      this.institucionSelected = new Institucion();
+      this.institucionSelected.id = this.retiroMedicamento.institucion.id;
+      console.log(this.institucionSelected);
+      let date = this.retiroMedicamento.fecha.split('/');
+      this.edit = true;
+      this.registerForm = this.formBuilder.group({
+        nombre: [this.retiroMedicamento.nombre, Validators.required],
+        hora: [this.retiroMedicamento.hora, Validators.required],
+        fecha: [new Date(new Date( date[2] + "/" + date[1] + "/" + date[0])), [Validators.required]],
+        lugar: [this.retiroMedicamento.lugar, [Validators.required]],
+        paciente_rut: [this.retiroMedicamento.paciente_rut, [Validators.required], this.validateRut.bind(this)],
+        id_institucion: ['', [Validators.required]],
+        dosis: [this.retiroMedicamento.dosis]
+      }); 
+    }
+    
   }
 
   validateRut(control: AbstractControl){
@@ -61,20 +85,42 @@ export class RetiroMedicamentoFormComponent implements OnInit {
     }
     
     this.loading = true;
-    this.retiroMedicamentoService.insert(this.registerForm.value)
+    if(this.edit){
+      this.retiroMedicamentoService.update(this.registerForm.value, this.retiroMedicamento.id)
       .pipe(first())
       .subscribe(
         () => {
-          this.alertService.success('Retiro medicamento ingresado satisfactoriamente', true);
+          this.alertService.success('Retiro Medicamento actualizado satisfactoriamente', true);
           this.loading = false;
           this.registerForm.reset();
           this.dialogRef.close();
         },
         error => {
-          this.alertService.error(error.message);
+          this.alertService.error(error);
           this.loading = false;
         }
       );
-      
+    }else{
+      this.retiroMedicamentoService.insert(this.registerForm.value)
+      .pipe(first())
+      .subscribe(
+        () => {
+          this.alertService.success('Retiro Medicamento ingresado satisfactoriamente', true);
+          this.loading = false;
+          this.registerForm.reset();
+          this.dialogRef.close();
+        },
+        error => {
+          this.alertService.error(error);
+          this.loading = false;
+        }
+      );
+    }  
+  }
+
+  compareInst(institucion: any,inst2: any): boolean {
+    console.log(this.institucionSelected);
+    console.log(inst2);
+    return  institucion == this.institucionSelected;
   }
 }

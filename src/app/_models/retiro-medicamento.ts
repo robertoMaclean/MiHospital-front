@@ -6,5 +6,10 @@ export class RetiroMedicamento {
     paciente_rut: string;
     id_institucion: string;
     id: number;
+    nombreInstitucion: string;
     dosis: string;
+    institucion: {
+        nombre_institucion: string;
+        id: number;
+    }
 }

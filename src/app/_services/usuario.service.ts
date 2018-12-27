@@ -32,13 +32,11 @@ export class UsuarioService {
     }
 
     update(usuario: Usuario, rut: string) {
-        console.log(usuario);
         let body = this.fillEditBody(usuario)
-        console.log(body.toString());
         let options = {
             headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
-        };
-        return this.http.put(this.URL, body.toString(), options);
+        }; 
+        return this.http.post(this.URL + rut, body.toString(), options);
     }
 
     private fillBody(usuario: any): URLSearchParams {

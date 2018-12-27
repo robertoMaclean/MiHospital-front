@@ -17,7 +17,7 @@ import { RetiroMedicamentoFormComponent } from '../retiro-medicamento-form/retir
 })
 export class RetiroMedicamentoComponent implements OnInit {
 
-  displayedColumns: string[] = ['select', 'nombre', 'nombre_paciente', 'rut_paciente', 'fecha', 'hora', 'lugar', 'dosis'];
+  displayedColumns: string[] = ['select', 'nombre', 'nombre_paciente', 'paciente_rut', 'fecha', 'hora', 'lugar', 'dosis', 'editar'];
   dataSource:  MatTableDataSource<RetiroMedicamento>;
   selection = new SelectionModel<RetiroMedicamento>(true, []);
   deleteButton: boolean;
@@ -26,6 +26,7 @@ export class RetiroMedicamentoComponent implements OnInit {
   submitted = false;
   instituciones: Institucion[];
   header: string;
+  edit: boolean;
 
   constructor(
     private retiroMedicamentoService: RetiroMedicamentoService,
@@ -46,6 +47,7 @@ export class RetiroMedicamentoComponent implements OnInit {
       this.retiroMedicamentos = retiroMedicamentos; 
       this.dataSource = new MatTableDataSource<RetiroMedicamento>(this.retiroMedicamentos);
     });
+    
   }
 
   /** Whether the number of selected elements matches the total number of rows. */
@@ -118,15 +120,24 @@ export class RetiroMedicamentoComponent implements OnInit {
 
   new(){
     const dialogRef = this.dialog.open(RetiroMedicamentoFormComponent, {
-      width: '500px'
+      width: '500px',
+      data: null
     });
     dialogRef.afterClosed().subscribe(()=> {
       this.loadRetiroMedicamentos();
     });
   }
 
-  onChange(){
-    alert("hola");
+  update(retiroMedicamento: RetiroMedicamento){
+    this.edit = true;
+    const dialogRef = this.dialog.open(RetiroMedicamentoFormComponent, {
+      width: '500px',
+      data: retiroMedicamento
+    });
+    dialogRef.afterClosed().subscribe(()=> {
+      this.loadRetiroMedicamentos();
+      this.edit = false;
+    });
   }
 
 }
