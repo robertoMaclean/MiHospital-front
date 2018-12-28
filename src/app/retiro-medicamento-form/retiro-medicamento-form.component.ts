@@ -18,10 +18,9 @@ export class RetiroMedicamentoFormComponent implements OnInit {
   loading = false;
   submitted = false;
   account_validation_messages = account_validation_messages;
-  selected: number;
+  private selected: number;
   edit: boolean;
   retiroID: number;
-  institucionSelected: Institucion;
 
   constructor(
     private institucionService: InstitucionService,
@@ -46,18 +45,20 @@ export class RetiroMedicamentoFormComponent implements OnInit {
         dosis: ['']
       });
     }else {
-      this.institucionSelected = new Institucion();
-      this.institucionSelected.id = this.retiroMedicamento.institucion.id;
-      console.log(this.institucionSelected);
       let date = this.retiroMedicamento.fecha.split('/');
       this.edit = true;
+      let id_institucion: any = '';
+      
+      if(this.retiroMedicamento.institucion!=null){
+        id_institucion = this.retiroMedicamento.institucion.id;
+      }
       this.registerForm = this.formBuilder.group({
         nombre: [this.retiroMedicamento.nombre, Validators.required],
         hora: [this.retiroMedicamento.hora, Validators.required],
         fecha: [new Date(new Date( date[2] + "/" + date[1] + "/" + date[0])), [Validators.required]],
         lugar: [this.retiroMedicamento.lugar, [Validators.required]],
         paciente_rut: [this.retiroMedicamento.paciente_rut, [Validators.required], this.validateRut.bind(this)],
-        id_institucion: ['', [Validators.required]],
+        id_institucion: [id_institucion, [Validators.required]],
         dosis: [this.retiroMedicamento.dosis]
       }); 
     }
@@ -118,9 +119,7 @@ export class RetiroMedicamentoFormComponent implements OnInit {
     }  
   }
 
-  compareInst(institucion: any,inst2: any): boolean {
-    console.log(this.institucionSelected);
-    console.log(inst2);
-    return  institucion == this.institucionSelected;
+  compareInst(id1: number, id2: number): boolean {
+    return  id1 == id2;
   }
 }

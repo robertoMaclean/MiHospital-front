@@ -123,6 +123,7 @@ export class UsuarioComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(()=> {
       this.loadUsuarios();
+      this.selection.clear();
     });
   }
 
@@ -134,6 +135,7 @@ export class UsuarioComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(()=> {
       this.loadUsuarios();
+      this.selection.clear();
       this.edit = false;
     });
   }

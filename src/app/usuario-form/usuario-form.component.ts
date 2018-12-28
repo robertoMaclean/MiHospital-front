@@ -88,7 +88,7 @@ export class UsuarioFormComponent implements OnInit {
       .pipe(first())
       .subscribe(
         () => {
-          this.alertService.success('Usuario Registrado satisfactoriamente', true);
+          this.alertService.success('Usuario actualizado satisfactoriamente', true);
           this.loading = false;
           this.dialogRef.close();
         },
@@ -112,7 +112,9 @@ export class UsuarioFormComponent implements OnInit {
         }
       );
     }
-   
-    
+  }
+
+  compareInst(id1: number, id2: number): boolean {
+    return  id1 == id2;
   }
 }

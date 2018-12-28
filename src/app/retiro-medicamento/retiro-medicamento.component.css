@@ -25,3 +25,7 @@
     white-space: nowrap;
     padding: 5px;
 }
+
+.mat-raised-button {
+    margin-right: 5px;
+}

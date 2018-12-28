@@ -56,4 +56,27 @@ html, body {
 .margin-bottom-10 {
   margin-bottom: 10px;
 }
+
+.pointer tr {
+  cursor: pointer;
+}
+
+.button-success {
+  color: white;
+  background-color: #5cb85c
+}
+
+.button-info {
+  color: white;
+  background-color: #5bc0de;
+}
+
+.delete-button-icon {
+  background-color: #f44336;
+}
+
+.margin-right-5{
+  margin-right: 5px;
+}
+
   

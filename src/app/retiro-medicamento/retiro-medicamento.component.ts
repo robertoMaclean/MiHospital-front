@@ -86,11 +86,11 @@ export class RetiroMedicamentoComponent implements OnInit {
       data: response
     });
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
       if(result){
         this.deleteRetiroMedicamento();
         this.selection.clear();
       }   
+      this.masterToggle();
     });
   }
 
@@ -125,6 +125,7 @@ export class RetiroMedicamentoComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(()=> {
       this.loadRetiroMedicamentos();
+      this.selection.clear();
     });
   }
 
@@ -137,6 +138,7 @@ export class RetiroMedicamentoComponent implements OnInit {
     dialogRef.afterClosed().subscribe(()=> {
       this.loadRetiroMedicamentos();
       this.edit = false;
+      this.selection.clear();
     });
   }
 
