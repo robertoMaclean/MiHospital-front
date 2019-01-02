@@ -90,7 +90,6 @@ export class RetiroMedicamentoComponent implements OnInit {
         this.deleteRetiroMedicamento();
         this.selection.clear();
       }   
-      this.masterToggle();
     });
   }
 
@@ -120,7 +119,7 @@ export class RetiroMedicamentoComponent implements OnInit {
 
   new(){
     const dialogRef = this.dialog.open(RetiroMedicamentoFormComponent, {
-      width: '400px',
+      width: '600px',
       data: null
     });
     dialogRef.afterClosed().subscribe(()=> {
@@ -132,7 +131,7 @@ export class RetiroMedicamentoComponent implements OnInit {
   update(retiroMedicamento: RetiroMedicamento){
     this.edit = true;
     const dialogRef = this.dialog.open(RetiroMedicamentoFormComponent, {
-      width: '500px',
+      width: '600px',
       data: retiroMedicamento
     });
     dialogRef.afterClosed().subscribe(()=> {

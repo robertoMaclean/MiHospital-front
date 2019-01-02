@@ -40,7 +40,7 @@ export class RetiroMedicamentoFormComponent implements OnInit {
         nombre: ['', Validators.required],
         hora: ['', Validators.required],
         fecha: ['', [Validators.required]],
-        lugar: ['', [Validators.required]],
+        lugar: [''],
         paciente_rut: ['', [Validators.required], this.validateRut.bind(this)],
         id_institucion: ['', [Validators.required]],
         dosis: ['']

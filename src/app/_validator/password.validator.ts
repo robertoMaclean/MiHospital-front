@@ -3,11 +3,12 @@ import { ErrorStateMatcher } from '@angular/material';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-    let contrasenaInvalid = false;
-    if(control.parent.get('contrasena').value!=''){
-      contrasenaInvalid = control.parent.get('contrasena').invalid;
+    
+    if(control.parent.get('contrasena').value==''){
+      return false;
     }
-    return (control && control.parent.get('contrasena').value !== control.parent.get('repetir_contrasena').value && control.dirty) || contrasenaInvalid
+    let contrasenaInvalid = control.parent.get('contrasena').invalid;
+    return !(control && (control.parent.get('contrasena').value == control.parent.get('repetir_contrasena').value) && control.dirty) || contrasenaInvalid;
   }
 }
 
