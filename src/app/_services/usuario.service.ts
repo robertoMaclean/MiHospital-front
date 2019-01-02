@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Usuario } from '../_models'
+import { Usuario, UsuarioPassword } from '../_models'
 
 
 @Injectable()
 export class UsuarioService {
+    options = {
+        headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
+    }; 
     URL = '/retiro_medicamento/usuario/';
     constructor(private http: HttpClient) {
 
@@ -20,11 +23,8 @@ export class UsuarioService {
 
     insert(usuario: Usuario) {
         let body = this.fillBody(usuario);
-        let options = {
-            headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
-        };
 
-        return this.http.post(this.URL, body.toString(), options);
+        return this.http.post(this.URL, body.toString(), this.options);
     }
 
     delete(rut: string) {
@@ -33,10 +33,16 @@ export class UsuarioService {
 
     update(usuario: Usuario, rut: string) {
         let body = this.fillEditBody(usuario)
-        let options = {
-            headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
-        }; 
-        return this.http.post(this.URL + rut, body.toString(), options);
+        
+        return this.http.post(this.URL + rut, body.toString(), this.options);
+    }
+
+    update_password(usuarioPassword: UsuarioPassword, rut: string){
+        console.log(usuarioPassword);
+        let body = new URLSearchParams();
+        body.set('new_password', usuarioPassword.contrasena);
+        /* body.set('old_password', usuarioPassword.contrasena_antigua); */
+        return this.http.post(this.URL + 'set_password/' + rut, body.toString(), this.options);
     }
 
     private fillBody(usuario: any): URLSearchParams {

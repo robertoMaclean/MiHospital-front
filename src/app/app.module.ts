@@ -22,6 +22,7 @@ import { JwtInterceptor, ErrorInterceptor } from './_helpers';
 import { LoginComponent } from './login';
 import { AuthSomeGuard } from './_guards';
 import { HeaderComponent } from './header/header.component';
+import { PasswordFormComponent } from './password-form/password-form.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { HeaderComponent } from './header/header.component';
     UsuarioComponent,
     UsuarioFormComponent,
     LoginComponent,
-    HeaderComponent
+    HeaderComponent,
+    PasswordFormComponent
   ],
   imports: [
     BrowserModule,
@@ -61,7 +63,7 @@ import { HeaderComponent } from './header/header.component';
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
   ],
   bootstrap: [AppComponent],
-  entryComponents: [DialogConfirmComponent, RetiroMedicamentoFormComponent, UsuarioFormComponent]
+  entryComponents: [DialogConfirmComponent, RetiroMedicamentoFormComponent, UsuarioFormComponent, PasswordFormComponent]
 })
 export class AppModule {
 

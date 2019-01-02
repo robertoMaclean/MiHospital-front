@@ -18,9 +18,9 @@ export class RetiroMedicamentoFormComponent implements OnInit {
   loading = false;
   submitted = false;
   account_validation_messages = account_validation_messages;
-  private selected: number;
   edit: boolean;
   retiroID: number;
+  form_title: string;
 
   constructor(
     private institucionService: InstitucionService,
@@ -32,6 +32,7 @@ export class RetiroMedicamentoFormComponent implements OnInit {
     ) { }
 
   ngOnInit() {
+    this.form_title = 'Registrar Retiro Medicamento';
     this.getInstituciones();
     if(this.retiroMedicamento==null){
       this.edit = false;
@@ -93,7 +94,6 @@ export class RetiroMedicamentoFormComponent implements OnInit {
         () => {
           this.alertService.success('Retiro Medicamento actualizado satisfactoriamente', true);
           this.loading = false;
-          this.registerForm.reset();
           this.dialogRef.close();
         },
         error => {

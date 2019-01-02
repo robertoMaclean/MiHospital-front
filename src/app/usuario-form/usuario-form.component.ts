@@ -83,8 +83,7 @@ export class UsuarioFormComponent implements OnInit {
     }
     this.loading = true;
     if(this.edit){
-      let usuario = new Usuario(this.registerForm.value);
-      this.usuarioService.update(usuario, this.rut)
+      this.usuarioService.update(this.registerForm.value, this.rut)
       .pipe(first())
       .subscribe(
         () => {

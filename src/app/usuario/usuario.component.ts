@@ -7,6 +7,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { DialogConfirmComponent, DialogData } from '../dialog-confirm/dialog-confirm.component'
 import { MatDialog } from '@angular/material';
 import { UsuarioFormComponent } from '../usuario-form/usuario-form.component';
+import { PasswordFormComponent } from '../password-form/password-form.component';
 
 @Component({
   selector: 'app-usuario',
@@ -16,7 +17,7 @@ import { UsuarioFormComponent } from '../usuario-form/usuario-form.component';
 
 export class UsuarioComponent implements OnInit {
 
-  displayedColumns: string[] = ['select', 'nombres', 'apellido', 'rut', 'correo', 'telefono', 'institucion', 'editar'];
+  displayedColumns: string[] = ['select', 'nombres', 'apellido', 'rut', 'correo', 'telefono', 'institucion', 'editar', 'cambiar_contrasena'];
   dataSource:  MatTableDataSource<Usuario>;
   selection = new SelectionModel<Usuario>(true, []);
   deleteButton: boolean;
@@ -44,7 +45,6 @@ export class UsuarioComponent implements OnInit {
     this.usuarioService.getAll().pipe(first()).subscribe(usuarios => { 
       this.usuarios = usuarios; 
       this.dataSource = new MatTableDataSource<Usuario>(this.usuarios);
-      console.log(this.usuarios);
     });
   }
 
@@ -130,6 +130,19 @@ export class UsuarioComponent implements OnInit {
   update(usuario: Usuario){
     this.edit = true;
     const dialogRef = this.dialog.open(UsuarioFormComponent, {
+      width: '500px',
+      data: usuario
+    });
+    dialogRef.afterClosed().subscribe(()=> {
+      this.loadUsuarios();
+      this.selection.clear();
+      this.edit = false;
+    });
+  }
+
+  setPassword(usuario: Usuario){
+    this.edit = true;
+    const dialogRef = this.dialog.open(PasswordFormComponent, {
       width: '500px',
       data: usuario
     });

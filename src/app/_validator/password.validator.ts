@@ -7,7 +7,6 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
     if(control.parent.get('contrasena').value!=''){
       contrasenaInvalid = control.parent.get('contrasena').invalid;
     }
-    console.log(contrasenaInvalid);
     return (control && control.parent.get('contrasena').value !== control.parent.get('repetir_contrasena').value && control.dirty) || contrasenaInvalid
   }
 }

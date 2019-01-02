@@ -120,7 +120,7 @@ export class RetiroMedicamentoComponent implements OnInit {
 
   new(){
     const dialogRef = this.dialog.open(RetiroMedicamentoFormComponent, {
-      width: '500px',
+      width: '400px',
       data: null
     });
     dialogRef.afterClosed().subscribe(()=> {
