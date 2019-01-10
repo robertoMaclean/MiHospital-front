@@ -38,7 +38,6 @@ export class UsuarioComponent implements OnInit {
   ngOnInit() {
     this.loadUsuarios();
     this.deleteButtonActive();  
-    this.getInstituciones();
   }
 
   private loadUsuarios() {
@@ -151,6 +150,10 @@ export class UsuarioComponent implements OnInit {
       this.selection.clear();
       this.edit = false;
     });
+  }
+
+  public doFilter = (value: string) => {
+    this.dataSource.filter = value.trim().toLocaleLowerCase();
   }
 }
 

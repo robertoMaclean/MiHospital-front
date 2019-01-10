@@ -141,4 +141,8 @@ export class RetiroMedicamentoComponent implements OnInit {
     });
   }
 
+  public doFilter = (value: string) => {
+    this.dataSource.filter = value.trim().toLocaleLowerCase();
+  }
+
 }

@@ -2,10 +2,15 @@
 <div class="margin-top-100" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%" fxLayoutAlign="center">
     <div fxFlex="80%">
         <mat-card>
-            <mat-card-header>
+            <mat-card-header fxLayoutAlign="center center">
                 <mat-card-title><h2>Retiros registrados</h2></mat-card-title>
             </mat-card-header>
             <mat-card-content>
+                <div fxLayout fxLayoutAlign="center center">
+                    <mat-form-field class="margin-top-20" fxFlex="20%">
+                        <input matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="Filtro">
+                    </mat-form-field>
+                </div>
                 <div class="overflow-y margin-10">
                     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 full-width pointer" (click)="deleteButtonActive()">
                         <ng-container matColumnDef="select">
