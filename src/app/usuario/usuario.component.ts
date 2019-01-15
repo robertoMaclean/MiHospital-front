@@ -37,14 +37,27 @@ export class UsuarioComponent implements OnInit {
 
   ngOnInit() {
     this.loadUsuarios();
-    this.deleteButtonActive();  
+    this.deleteButtonActive();   
   }
 
   private loadUsuarios() {
     this.usuarioService.getAll().pipe(first()).subscribe(usuarios => { 
-      this.usuarios = usuarios; 
+      this.usuarios = usuarios.sort(this.compare); 
       this.dataSource = new MatTableDataSource<Usuario>(this.usuarios);
+      this.dataSource.filterPredicate = (usuario: Usuario, filter: string) => {     
+        return this.filter(usuario, filter);
+       };
     });
+  }
+
+  filter(usuario: Usuario, filter: string){
+    let nombre = usuario.nombres.trim().toLocaleLowerCase().includes(filter);
+    let apellido = usuario.apellido.trim().toLocaleLowerCase().includes(filter);
+    let rut = usuario.rut.trim().toLocaleLowerCase().includes(filter);
+    let correo = usuario.correo.trim().toLocaleLowerCase().includes(filter);
+    let telefono = usuario.telefono.trim().toLocaleLowerCase().includes(filter);
+    let institucion = usuario.institucion.nombre_institucion.trim().toLocaleLowerCase().includes(filter);
+    return nombre || apellido || rut || correo || telefono || institucion;
   }
 
   /** Whether the number of selected elements matches the total number of rows. */
@@ -58,7 +71,7 @@ export class UsuarioComponent implements OnInit {
   masterToggle() {
     this.isAllSelected() ?
         this.selection.clear() :
-        this.dataSource.data.forEach(row => this.selection.select(row));
+        this.dataSource.filteredData.forEach(row => this.selection.select(row));
   }
 
   deleteButtonActive(){
@@ -154,6 +167,15 @@ export class UsuarioComponent implements OnInit {
 
   public doFilter = (value: string) => {
     this.dataSource.filter = value.trim().toLocaleLowerCase();
+  } 
+
+  compare(usuario1: Usuario, usuario2: Usuario) {
+    if (usuario1.rut.split('-').join() < usuario2.rut.split('-').join())
+      return -1;
+    if (usuario1.rut.split('-').join() > usuario2.rut.split('-').join())
+      return 1;
+    return 0;
   }
+ 
 }
 
